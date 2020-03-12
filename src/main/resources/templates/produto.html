@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>JSP Page</title>
+        <script th:src="@{/js/jquery.min.js}"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+    </head>
+    <body>
+        <h1>Produto</h1>
+
+        <div class="container">
+            <form method="POST" th:object="${produto}" th:action="@{/produto/salvar}">
+                <input type="hidden" name="id" th:field="*{id}"/>
+                <div class="form-group">
+                    <label id="labelNome" for="nome">Nome:</label>
+                    <input class="form-control" type="text" id="nome" name="nome" required th:field="*{nome}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="peso">Peso</label>
+                    <input class="form-control" type="number" id="peso" name="peso" required th:field="*{peso}"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="preco">Preço</label>
+                    <input class="form-control" type="number" id="preco" name="preco" required th:field="*{preco}"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="Marca">Marca</label>
+                    <select name="marca" th:field="*{marca}">
+                        <option value="" selected="true">Selecione</option>
+                        <option th:each="i : ${marcas}" th:value="${i.id}" th:text="${i.nome}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Categoria">Categoria</label>
+                    <select name="categoria" th:field="*{categoria}">
+                        <option value="" selected="true">Selecione</option>
+                        <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}"></option>
+                    </select>
+                </div>
+
+                <button id="salvar" class="btn btn-success" type="submit">Salvar</button>
+            </form>
+        </div>
+
+        <div class="container">
+            <table class="table">
+                <thead class='thead-dark'>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Peso</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr th:each="c : ${lista}">
+                        <td th:text="${c.nome}"></td>
+                        <td th:text="${c.categoria.nome}"></td>
+                        <td th:text="${c.marca.nome}"></td>
+                        <td th:text="${c.peso}"></td>
+                        <td th:text="${c.preco}"></td>
+                        <td>
+                            <a th:href="@{'/produto/editar/'+${c.id}}">
+                                <button class="btn btn-primary">Editar</button>
+                            </a>
+                            <a th:href="@{'/produto/excluir/'+${c.id}}">
+                                <button class="btn btn-danger">Excluir</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
