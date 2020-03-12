@@ -15,61 +15,63 @@ import javax.persistence.Table;
 @SequenceGenerator(allocationSize = 1, name = "seq_categoria", sequenceName = "seq_categoria_id")
 public class Categoria implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "seq_categoria")
-    private int id;
-    private String nome;
+  private static final long serialVersionUID = -3636811567203895890L;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Produto> produtos;
+  @Id
+  @GeneratedValue(generator = "seq_categoria")
+  private int id;
+  private String nome;
 
-    public int getId() {
-        return id;
+  @OneToMany(mappedBy = "categoria")
+  private List<Produto> produtos;
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public List<Produto> getProdutos() {
+    return produtos;
+  }
+
+  public void setProdutos(List<Produto> produtos) {
+    this.produtos = produtos;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 79 * hash + Objects.hashCode(this.nome);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    if (obj == null) {
+      return false;
     }
-
-    public String getNome() {
-        return nome;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    final Categoria other = (Categoria) obj;
+    if (!Objects.equals(this.nome, other.nome)) {
+      return false;
     }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.nome);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Categoria other = (Categoria) obj;
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        return true;
-    }
+    return true;
+  }
 
 }
